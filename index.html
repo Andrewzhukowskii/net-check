@@ -1,0 +1,57 @@
+<!DOCTYPE html><html lang="ru"><head><meta charset="utf-8"><meta name="robots" content="noindex,nofollow"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="referrer" content="no-referrer"><title>Проверка хостеров</title><style>
+:root{color-scheme:light dark;--b:#fff;--t:#111;--m:#666;--l:#ddd;--g:#0a7d2c;--r:#c4161c;--o:#b25e00;--a:#0b57d0}
+@media(prefers-color-scheme:dark){:root{--b:#111;--t:#eee;--m:#9a9a9a;--l:#333;--g:#4cd176;--r:#ff6b6b;--o:#ffb454;--a:#7ab0ff}}
+body{margin:0;padding:14px;background:var(--b);color:var(--t);font:17px/1.4 system-ui,sans-serif;max-width:640px}
+p{margin:0 0 8px}h2{font-size:16px;margin:18px 0 4px}.m{color:var(--m);font-size:14px}
+select,input,button{font:inherit;color:inherit;background:none;border:1px solid var(--l);border-radius:10px;padding:12px;margin:4px 0;width:100%;box-sizing:border-box}
+button{background:var(--a);color:var(--b);border:0;font-weight:700;padding:16px}button:disabled{opacity:.5}
+#c{background:none;color:var(--a);border:1px solid var(--a);display:none}
+table{width:100%;border-collapse:collapse}td{padding:9px 4px;border-bottom:1px solid var(--l);vertical-align:top}
+td:last-child{white-space:nowrap;text-align:right;font-weight:700}.p{color:var(--g)}.f{color:var(--r)}.e{color:var(--o)}.w{color:var(--m)}
+#v{font-weight:700;font-size:18px;margin:12px 0}
+</style></head><body>
+<p><b>Отключите VPN, выберите сеть и нажмите кнопку. Ждите до полутора минут, экран не гасите.</b></p>
+<p><b>Пришлите снимок экрана при любом результате. Повторите на мобильном интернете и на Wi-Fi.</b></p>
+<p class=m>«Замерзает» — загрузка с этого хостера у вашего оператора останавливается.</p>
+<select id="n"><option>мобильный интернет</option><option>Wi-Fi</option></select>
+<input id="o" placeholder="Оператор (например, МТС)" autocomplete="off">
+<button id="s">Начать проверку</button>
+<h2>Хостеры</h2><table id="h"></table>
+<h2>Контрольные</h2><table id="k"></table>
+<div id="v"></div><button id="c">Скопировать результат</button>
+<script>
+var T=window.__T||[
+["AlexHost (Молдавия)","https://alexhost.com/wp-content/themes/alexhost_new/img/header/iso-iec-27001.png","i"],
+["aHOST.uz (Узбекистан)","https://www.ahost.uz/sites/default/files/editor/70000uz.png","i"],
+["NLS (Казахстан)","https://nls.kz/_nuxt/090a644.js","s"],
+["PS Cloud (Казахстан)","https://www.ps.kz/_next/static/css/0ed2e1ae6b91af46.css","c"],
+["MAXKO (Сербия)","https://www.maxko-hosting.com/themes/default/images/news/Tor-Network.jpg","i"],
+["RedNET (Грузия)","https://rednet.ge/assets/og-card.jpg","i"],
+["Gohost (Казахстан)","https://gohost.kz/templates/bootstrap/css/bootstrap.min.css","c"],
+["Hetzner (Германия)","https://docs.hetzner.cloud/_next/static/chunks/4bd1b696-1c88c00269cf164c.js","s","f"],
+["OVH (Франция)","https://lil1-rbx.speedtest.network.ovh.net/og-image.png","i","f"],
+["Яндекс (Россия)","https://yastatic.net/jquery/3.3.1/jquery.min.js","s","p"]];
+var W={p:["проходит","p"],f:["замерзает","f"],e:["ошибка","e"]},D=document,$=function(i){return D.getElementById(i)},R=[],ok=0;
+function add(t,i){var r=D.createElement("tr"),w=t[3]?" <span class=m>(ждём: "+(t[3]=="f"?"замерзает":"проходит")+")</span>":"";
+r.innerHTML="<td>"+t[0]+w+"</td><td class=w>—</td>";$(t[3]?"k":"h").appendChild(r);t.r=r}
+function run(t,done){var u=t[1]+(t[1].indexOf("?")<0?"?":"&")+"r="+Math.random().toString(36).slice(2),t0=Date.now(),d=0,f,x;
+function fin(s){if(d)return;d=1;clearTimeout(x);if(f)f.remove();t.s=s;t.t=((Date.now()-t0)/1e3).toFixed(1);
+t.r.cells[1].className=W[s][1];t.r.cells[1].textContent=W[s][0]+" "+t.t+" с"+(t[3]?s==t[3]?" ✓":" ✗":"");done()}
+x=setTimeout(function(){fin("f")},25e3);t.r.cells[1].textContent="…";
+function ev(e){return function(){fin(e)}}
+if(t[2]=="i"){f=new Image;f.onload=ev("p");f.onerror=ev("e");f.src=u}
+else if(t[2]=="s"){f=D.createElement("link");f.rel="preload";f.as="script";f.onload=ev("p");f.onerror=ev("e");f.href=u;D.head.appendChild(f)}
+else{f=D.createElement("iframe");f.sandbox="allow-scripts";f.hidden=1;
+var m=function(e){if(e.source==f.contentWindow){removeEventListener("message",m);fin(e.data=="p"?"p":"e")}};addEventListener("message",m);
+f.srcdoc='<link rel=stylesheet href="'+u+'" onload="parent.postMessage(\'p\',\'*\')" onerror="parent.postMessage(\'e\',\'*\')">';D.body.appendChild(f)}}
+$("s").onclick=function(){var b=this,q=T.slice(),n=0,a=0;b.disabled=1;$("c").style.display="none";$("v").textContent="";$("h").innerHTML=$("k").innerHTML="";
+T.forEach(add);ok=0;
+function nx(){while(a<4&&n<q.length){a++;run(q[n++],function(){a--;nx();if(!a&&n>=q.length)end()})}}
+function end(){b.disabled=0;var c=T.filter(function(t){return t[3]}),g=c.every(function(t){return t.s==t[3]});ok=g;
+$("v").className=g?"p":"f";$("v").textContent=g?"Тест исправен":"Контрольные не совпали — результат ненадёжен";$("c").style.display="block"}
+nx()};
+$("c").onclick=function(){var s=["Дата: "+new Date().toLocaleString("ru"),"Сеть: "+$("n").value,"Оператор: "+$("o").value,"UA: "+navigator.userAgent].concat(T.map(function(t){return t[0]+(t[3]?" [контроль, ждём "+(t[3]=="f"?"замерзает":"проходит")+"]":"")+": "+W[t.s][0]+", "+t.t+" с"}),[$("v").textContent]).join("\n"),b=this;
+function ok2(){b.textContent="Скопировано"}
+function fb(){var a=D.createElement("textarea");a.value=s;D.body.appendChild(a);a.select();try{D.execCommand("copy");ok2()}catch(e){b.textContent="Не вышло, сделайте снимок"}a.remove()}
+navigator.clipboard?navigator.clipboard.writeText(s).then(ok2,fb):fb()};
+</script></body></html>
